@@ -1,11 +1,11 @@
 # Local Dictation Cleanup
 
-This is a local second-stage cleanup utility for clipboard-only dictation.
+This is a local second-stage cleanup utility for prompt-oriented dictation.
 
 Flow:
 
 ```text
-dictation app -> clipboard -> Foundry Local WinML cleanup server -> cleaned text pasted into active textbox
+dictation app -> clipboard -> Foundry Local WinML cleanup server -> cleaned prompt pasted into active textbox
 ```
 
 ## Current Local Status
@@ -143,7 +143,8 @@ To stop whichever cleanup server was started from this folder:
 - QNN/NPU load currently fails with `QNN_COMMON_ERROR_MEM_ALLOC`.
 - CPU fallback model `qwen2.5-0.5b-instruct-generic-cpu:4` downloaded, loads successfully, and is running through `start_cpu_server.ps1`.
 - Simple cleanup test is around 0.35-0.50 seconds on CPU fallback.
-- The 0.5B model is not consistently safe for longer or technical text; the server rejects outputs that drop content tokens instead of pasting unsafe rewrites.
+- Cleanup now allows prompt polishing: it can remove filler, false starts, repeated phrasing, and thinking-out-loud text while preserving the intended request and technical terms.
+- If the model returns an explanation or an obviously under-complete result, the server falls back to deterministic filler/punctuation cleanup instead of returning HTTP 500.
 
 See `docs\NPU_STATUS.md` for the current NPU failure details and manual Foundry CLI diagnostic commands.
 
@@ -222,6 +223,22 @@ The task runs at logon, starts the OpenWhispr DB watcher, and starts the CPU cle
 ```text
 logs\local_dictation_startup.log
 logs\cleanup_server.startup.log
+```
+
+## System Tray
+
+Start the tray monitor manually:
+
+```powershell
+.\start_tray_monitor.ps1
+```
+
+The tray icon starts cleanup automatically unless cleanup was disabled from the tray. Right-click it to see status, enable cleanup, disable cleanup, restart cleanup, open logs, or exit the tray. Disabling cleanup stops both the OpenWhispr DB watcher and the cleanup server; enabling cleanup starts them again. Exiting the tray only closes the tray monitor and leaves cleanup in its current state.
+
+To temporarily disable the background cleanup stack manually:
+
+```powershell
+.\start_local_dictation_stack.ps1 -DisableCleanup
 ```
 
 Remove it with:

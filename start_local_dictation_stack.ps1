@@ -1,5 +1,6 @@
 param(
-    [string]$Model = "qwen2.5-1.5b-instruct-generic-cpu:4"
+    [string]$Model = "qwen2.5-1.5b-instruct-generic-cpu:4",
+    [switch]$DisableCleanup
 )
 
 $ErrorActionPreference = "Stop"
@@ -25,6 +26,11 @@ function Test-CleanupServerListening {
 }
 
 Write-StartupLog "startup_begin model=$Model"
+
+if ($DisableCleanup) {
+    Write-StartupLog "startup_cleanup_disabled"
+    exit 0
+}
 
 try {
     powershell -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "start_openwhispr_db_watcher.ps1")

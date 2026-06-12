@@ -135,6 +135,7 @@ def main() -> int:
         "cleanup_ok "
         f"raw_len={len(raw_text)} cleaned_len={len(cleaned)} "
         f"model_elapsed={_format_seconds(data.get('elapsed_seconds'))} "
+        f"mode={data.get('cleanup_mode')} "
         f"total_elapsed={elapsed_total:.3f}s pasted={not args.no_paste}"
     )
     print(

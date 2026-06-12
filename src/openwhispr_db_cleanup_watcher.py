@@ -116,7 +116,8 @@ def clean_and_paste_row(
         log_event(
             "cleanup_ok "
             f"id={row_id} raw_len={len(raw_text)} cleaned_len={len(cleaned)} "
-            f"model_elapsed={data.get('elapsed_seconds')} pasted={not no_paste} "
+            f"model_elapsed={data.get('elapsed_seconds')} "
+            f"mode={data.get('cleanup_mode')} pasted={not no_paste} "
             f"replace_raw_paste={replace_raw_paste}"
         )
         return True

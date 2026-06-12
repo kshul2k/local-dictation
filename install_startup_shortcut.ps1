@@ -3,7 +3,7 @@ Set-Location $PSScriptRoot
 
 $startupFolder = [Environment]::GetFolderPath("Startup")
 $shortcutPath = Join-Path $startupFolder "Local Dictation Cleanup.lnk"
-$scriptPath = Join-Path $PSScriptRoot "start_local_dictation_stack.ps1"
+$scriptPath = Join-Path $PSScriptRoot "start_tray_monitor.ps1"
 $powershellPath = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
 
 $shell = New-Object -ComObject WScript.Shell
@@ -12,7 +12,7 @@ $shortcut.TargetPath = $powershellPath
 $shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$scriptPath`""
 $shortcut.WorkingDirectory = $PSScriptRoot
 $shortcut.WindowStyle = 7
-$shortcut.Description = "Starts local dictation cleanup server and OpenWhispr DB watcher."
+$shortcut.Description = "Starts the local dictation tray monitor, cleanup server, and OpenWhispr DB watcher."
 $shortcut.Save()
 
 Write-Host "Installed startup shortcut: $shortcutPath"
