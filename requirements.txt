@@ -1,0 +1,5 @@
+# WinML package. Do not install foundry-local-sdk in this same venv.
+foundry-local-sdk-winml
+pyperclip
+pyautogui
+requests

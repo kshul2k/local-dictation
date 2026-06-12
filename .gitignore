@@ -1,0 +1,11 @@
+.venv/
+.foundry-model-cache/
+cache/
+logs/
+run/
+diagnostics/npu_diagnostics/
+__pycache__/
+*.py[cod]
+*.log
+clipboard_watcher.stop
+openwhispr_db_watcher.stop
